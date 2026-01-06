@@ -1,0 +1,270 @@
+{
+  "quiz": [
+    {
+      "id": 1,
+      "question": "If you see smoke, what should you do first?",
+      "options": ["Run towards the exit", "Use the elevator", "Stay low and crawl to exit", "Open all windows"],
+      "correctAnswer": 2,
+      "explanation": "Smoke rises, so staying low helps you breathe cleaner air and see better during evacuation."
+    },
+    {
+      "id": 2,
+      "question": "During an earthquake, what is the safest action?",
+      "options": ["Run outside immediately", "Drop, Cover, and Hold On", "Stand in a doorway", "Get under a staircase"],
+      "correctAnswer": 1,
+      "explanation": "Drop, Cover, and Hold On is the internationally recommended response to earthquake shaking."
+    },
+    {
+      "id": 3,
+      "question": "What should you do if caught in a flood?",
+      "options": ["Drive through standing water", "Move to higher ground", "Stay in basement", "Wait for rescue in current location"],
+      "correctAnswer": 1,
+      "explanation": "Always move to higher ground immediately when flooding occurs. Never drive through flood water."
+    },
+    {
+      "id": 4,
+      "question": "How often should fire drills be conducted in schools?",
+      "options": ["Once a year", "Once a semester", "Monthly", "Weekly"],
+      "correctAnswer": 2,
+      "explanation": "Regular monthly fire drills ensure everyone knows evacuation procedures and routes."
+    },
+    {
+      "id": 5,
+      "question": "What is the universal emergency number?",
+      "options": ["911", "999", "112", "All of the above depending on country"],
+      "correctAnswer": 3,
+      "explanation": "Emergency numbers vary by country: 911 (US), 999 (UK), 112 (EU), etc."
+    }
+  ],
+  "rankings": [
+    {
+      "rank": 1,
+      "institution": "Sunrise Public School",
+      "score": 88,
+      "category": "Excellent",
+      "location": "California",
+      "lastDrill": "2024-01-15"
+    },
+    {
+      "rank": 2,
+      "institution": "BPIT College",
+      "score": 84,
+      "category": "Excellent",
+      "location": "Delhi",
+      "lastDrill": "2024-01-20"
+    },
+    {
+      "rank": 3,
+      "institution": "Greenfield High School",
+      "score": 79,
+      "category": "Good",
+      "location": "Texas",
+      "lastDrill": "2024-01-18"
+    },
+    {
+      "rank": 4,
+      "institution": "Your Institution",
+      "score": 72,
+      "category": "Average",
+      "location": "New York",
+      "lastDrill": "2024-01-22"
+    },
+    {
+      "rank": 5,
+      "institution": "Oakwood Elementary",
+      "score": 68,
+      "category": "Average",
+      "location": "Florida",
+      "lastDrill": "2024-01-10"
+    }
+  ],
+  "reports": [
+    {
+      "id": 1,
+      "building": "Main Building",
+      "description": "Broken emergency exit light in corridor",
+      "severity": "High",
+      "status": "In Progress",
+      "reportedBy": "John Smith",
+      "timestamp": "2024-01-22T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "building": "Science Block",
+      "description": "Fire extinguisher missing from 2nd floor",
+      "severity": "Critical",
+      "status": "Pending",
+      "reportedBy": "Sarah Johnson",
+      "timestamp": "2024-01-21T14:15:00Z"
+    },
+    {
+      "id": 3,
+      "building": "Library",
+      "description": "Emergency assembly point sign faded",
+      "severity": "Medium",
+      "status": "Resolved",
+      "reportedBy": "Mike Davis",
+      "timestamp": "2024-01-20T09:45:00Z"
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "name": "Alice Cooper",
+      "class": "10-A",
+      "status": "safe",
+      "location": "Assembly Point A",
+      "checkedIn": "2024-01-22T11:15:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Bob Wilson",
+      "class": "10-A",
+      "status": "safe",
+      "location": "Assembly Point A",
+      "checkedIn": "2024-01-22T11:16:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Carol Brown",
+      "class": "10-B",
+      "status": "missing",
+      "location": null,
+      "checkedIn": null
+    },
+    {
+      "id": 4,
+      "name": "David Lee",
+      "class": "10-B",
+      "status": "safe",
+      "location": "Assembly Point B",
+      "checkedIn": "2024-01-22T11:14:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Emma Thompson",
+      "class": "11-A",
+      "status": "safe",
+      "location": "Assembly Point A",
+      "checkedIn": "2024-01-22T11:17:00Z"
+    }
+  ],
+  "drills": [
+    {
+      "id": 1,
+      "type": "Fire Drill",
+      "date": "2024-01-22",
+      "duration": "4:32",
+      "participantsTotal": 450,
+      "participantsSafe": 448,
+      "participantsMissing": 2,
+      "efficiency": 88,
+      "notes": "Excellent response time. Two students were in restroom during drill."
+    },
+    {
+      "id": 2,
+      "type": "Earthquake Drill",
+      "date": "2024-01-15",
+      "duration": "6:15",
+      "participantsTotal": 445,
+      "participantsSafe": 445,
+      "participantsMissing": 0,
+      "efficiency": 92,
+      "notes": "Perfect execution. All students followed Drop, Cover, Hold protocol correctly."
+    },
+    {
+      "id": 3,
+      "type": "Lockdown Drill",
+      "date": "2024-01-08",
+      "duration": "3:45",
+      "participantsTotal": 440,
+      "participantsSafe": 438,
+      "participantsMissing": 2,
+      "efficiency": 85,
+      "notes": "Good response. Need to improve communication in Science block."
+    }
+  ],
+  "campusLocations": [
+    {
+      "id": 1,
+      "name": "Main Entrance",
+      "x": 50,
+      "y": 80,
+      "riskLevel": "Low",
+      "type": "entrance",
+      "evacuationRoute": "Primary Route A",
+      "capacity": 200,
+      "description": "Main building entrance with wide corridors"
+    },
+    {
+      "id": 2,
+      "name": "Science Lab Block",
+      "x": 25,
+      "y": 40,
+      "riskLevel": "High",
+      "type": "laboratory",
+      "evacuationRoute": "Emergency Route B",
+      "capacity": 60,
+      "description": "Chemistry and Physics labs - potential hazardous materials"
+    },
+    {
+      "id": 3,
+      "name": "Assembly Point A",
+      "x": 80,
+      "y": 20,
+      "riskLevel": "Safe",
+      "type": "assembly",
+      "evacuationRoute": "All Routes",
+      "capacity": 300,
+      "description": "Primary emergency assembly area - open field"
+    },
+    {
+      "id": 4,
+      "name": "Cafeteria",
+      "x": 40,
+      "y": 60,
+      "riskLevel": "Medium",
+      "type": "common",
+      "evacuationRoute": "Route C",
+      "capacity": 150,
+      "description": "Large common area - multiple exit points"
+    },
+    {
+      "id": 5,
+      "name": "Library",
+      "x": 70,
+      "y": 50,
+      "riskLevel": "Low",
+      "type": "academic",
+      "evacuationRoute": "Route A",
+      "capacity": 100,
+      "description": "Multi-story library with emergency stairwells"
+    }
+  ],
+  "classes": [
+    {
+      "id": 1,
+      "name": "10-A Mathematics",
+      "teacher": "Mrs. Johnson",
+      "students": 28,
+      "location": "Room 101",
+      "schedule": "Mon-Fri 9:00-10:00"
+    },
+    {
+      "id": 2,
+      "name": "11-B Physics",
+      "teacher": "Mr. Smith",
+      "students": 25,
+      "location": "Science Lab 2",
+      "schedule": "Tue-Thu 11:00-12:00"
+    },
+    {
+      "id": 3,
+      "name": "12-A Chemistry",
+      "teacher": "Dr. Brown",
+      "students": 22,
+      "location": "Science Lab 1",
+      "schedule": "Mon-Wed-Fri 2:00-3:00"
+    }
+  ]
+}

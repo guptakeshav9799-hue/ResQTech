@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Quiz - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <a href="javascript:history.back()" class="btn btn-outline btn-sm">← Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="quiz-container">
+            <!-- Quiz Header -->
+            <div class="quiz-header">
+                <h1 class="card-title">🎮 Safety Knowledge Quiz</h1>
+                <p class="card-description">Test your emergency preparedness knowledge and earn safety badges!</p>
+            </div>
+
+            <!-- Quiz Progress -->
+            <div class="quiz-progress">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="flex justify-between items-center mb-2">
+                            <span>Question <span id="current-question">1</span> of <span id="total-questions">5</span></span>
+                            <span>Score: <span id="current-score">0</span></span>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="quiz-progress-bar" style="width: 20%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Content -->
+            <div id="quiz-content">
+                <!-- Question Card -->
+                <div class="question-card">
+                    <div class="card">
+                        <div class="card-content">
+                            <h2 class="question-text" id="question-text">Loading question...</h2>
+                            <ul class="options-list" id="options-list">
+                                <!-- Options will be populated by JavaScript -->
+                            </ul>
+                            <div id="explanation" class="explanation hidden">
+                                <strong>Explanation:</strong>
+                                <p id="explanation-text"></p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary w-full hidden" id="next-btn">Next Question</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Results -->
+            <div id="quiz-results" class="hidden">
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="font-size: 4rem; margin-bottom: var(--spacing-4);" id="result-emoji">🎉</div>
+                        <h2 class="card-title" id="result-title">Quiz Complete!</h2>
+                        <div class="stat-number text-primary mb-4" id="final-score">85%</div>
+                        <div class="badge mb-4" id="result-badge">Safety Champion</div>
+                        <p id="result-message" class="mb-6">Excellent work! You've demonstrated strong safety knowledge.</p>
+                        
+                        <!-- Badge Earned -->
+                        <div class="card mb-6" style="background: linear-gradient(135deg, #fef3c7, #fed7aa);">
+                            <div class="card-content">
+                                <h3 class="card-title">🏆 Badge Earned!</h3>
+                                <div style="font-size: 3rem; margin: var(--spacing-4) 0;" id="earned-badge-icon">🔥</div>
+                                <div class="badge badge-high" id="earned-badge-name">Fire Safety Expert</div>
+                                <p class="mt-2" id="earned-badge-description">You've mastered fire emergency procedures!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer flex justify-between" style="gap: var(--spacing-3);">
+                        <button class="btn btn-outline w-full" id="retake-quiz">Retake Quiz</button>
+                        <a href="/dashboard/student" class="btn btn-primary w-full">Return to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script>
+        let quizData = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        let hasAnswered = false;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuiz();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('next-btn').addEventListener('click', nextQuestion);
+            document.getElementById('retake-quiz').addEventListener('click', resetQuiz);
+        }
+
+        async function loadQuiz() {
+            try {
+                const response = await fetch('/api/quiz');
+                quizData = await response.json();
+                displayQuestion();
+            } catch (error) {
+                console.error('Error loading quiz:', error);
+                // Fallback to local data
+                quizData = [
+                    {
+                        id: 1,
+                        question: "If you see smoke, what should you do first?",
+                        options: ["Run towards the exit", "Use the elevator", "Stay low and crawl to exit", "Open all windows"],
+                        correctAnswer: 2,
+                        explanation: "Smoke rises, so staying low helps you breathe cleaner air and see better during evacuation."
+                    },
+                    {
+                        id: 2,
+                        question: "During an earthquake, what is the safest action?",
+                        options: ["Run outside immediately", "Drop, Cover, and Hold On", "Stand in a doorway", "Get under a staircase"],
+                        correctAnswer: 1,
+                        explanation: "Drop, Cover, and Hold On is the internationally recommended response to earthquake shaking."
+                    },
+                    {
+                        id: 3,
+                        question: "What should you do if caught in a flood?",
+                        options: ["Drive through standing water", "Move to higher ground", "Stay in basement", "Wait for rescue in current location"],
+                        correctAnswer: 1,
+                        explanation: "Always move to higher ground immediately when flooding occurs. Never drive through flood water."
+                    },
+                    {
+                        id: 4,
+                        question: "How often should fire drills be conducted in schools?",
+                        options: ["Once a year", "Once a semester", "Monthly", "Weekly"],
+                        correctAnswer: 2,
+                        explanation: "Regular monthly fire drills ensure everyone knows evacuation procedures and routes."
+                    },
+                    {
+                        id: 5,
+                        question: "What is the universal emergency number?",
+                        options: ["911", "999", "112", "All of the above depending on country"],
+                        correctAnswer: 3,
+                        explanation: "Emergency numbers vary by country: 911 (US), 999 (UK), 112 (EU), etc."
+                    }
+                ];
+                displayQuestion();
+            }
+        }
+
+        function displayQuestion() {
+            if (currentQuestionIndex >= quizData.length) {
+                showResults();
+                return;
+            }
+
+            const question = quizData[currentQuestionIndex];
+            const questionText = document.getElementById('question-text');
+            const optionsList = document.getElementById('options-list');
+            const explanation = document.getElementById('explanation');
+            const nextBtn = document.getElementById('next-btn');
+
+            // Update question
+            questionText.textContent = question.question;
+
+            // Update progress
+            updateProgress();
+
+            // Clear previous options
+            optionsList.innerHTML = '';
+
+            // Create option buttons
+            question.options.forEach((option, index) => {
+                const li = document.createElement('li');
+                li.className = 'option-item';
+                
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.addEventListener('click', () => selectAnswer(index, button));
+                
+                li.appendChild(button);
+                optionsList.appendChild(li);
+            });
+
+            // Reset state
+            explanation.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            hasAnswered = false;
+            selectedAnswer = null;
+        }
+
+        function selectAnswer(answerIndex, buttonElement) {
+            if (hasAnswered) return;
+
+            selectedAnswer = answerIndex;
+            hasAnswered = true;
+
+            const question = quizData[currentQuestionIndex];
+            const isCorrect = answerIndex === question.correctAnswer;
+            
+            if (isCorrect) {
+                score++;
+            }
+
+            // Update button styles
+            const buttons = document.querySelectorAll('.option-button');
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === question.correctAnswer) {
+                    btn.classList.add('correct');
+                } else if (index === answerIndex && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Show explanation
+            const explanation = document.getElementById('explanation');
+            const explanationText = document.getElementById('explanation-text');
+            explanationText.textContent = question.explanation;
+            explanation.classList.remove('hidden');
+
+            // Show next button
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.classList.remove('hidden');
+            nextBtn.textContent = currentQuestionIndex === quizData.length - 1 ? 'View Results' : 'Next Question';
+
+            // Update score display
+            document.getElementById('current-score').textContent = score;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('total-questions').textContent = quizData.length;
+        }
+
+        function showResults() {
+            const percentage = Math.round((score / quizData.length) * 100);
+            const result = getScoreResult(percentage);
+
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            // Update result display
+            document.getElementById('result-emoji').textContent = result.emoji;
+            document.getElementById('result-title').textContent = result.title;
+            document.getElementById('final-score').textContent = percentage + '%';
+            document.getElementById('result-badge').textContent = result.badge;
+            document.getElementById('result-badge').className = 'badge ' + result.badgeClass;
+            document.getElementById('result-message').textContent = result.message;
+
+            // Update earned badge
+            document.getElementById('earned-badge-icon').textContent = result.badgeIcon;
+            document.getElementById('earned-badge-name').textContent = result.earnedBadge;
+            document.getElementById('earned-badge-description').textContent = result.badgeDescription;
+        }
+
+        function getScoreResult(percentage) {
+            if (percentage >= 90) {
+                return {
+                    emoji: '🏆',
+                    title: 'Outstanding!',
+                    badge: 'Safety Champion',
+                    badgeClass: 'badge-safe',
+                    message: 'Perfect! You\'re ready for any emergency situation.',
+                    badgeIcon: '🎖️',
+                    earnedBadge: 'Safety Champion',
+                    badgeDescription: 'You\'ve mastered all safety procedures!'
+                };
+            } else if (percentage >= 80) {
+                return {
+                    emoji: '🎉',
+                    title: 'Excellent Work!',
+                    badge: 'Safety Expert',
+                    badgeClass: 'badge-safe',
+                    message: 'Excellent work! You have strong safety knowledge.',
+                    badgeIcon: '🔥',
+                    earnedBadge: 'Fire Safety Expert',
+                    badgeDescription: 'You\'ve mastered fire emergency procedures!'
+                };
+            } else if (percentage >= 70) {
+                return {
+                    emoji: '👍',
+                    title: 'Good Job!',
+                    badge: 'Safety Aware',
+                    badgeClass: 'badge-medium',
+                    message: 'Good job! You have solid safety awareness.',
+                    badgeIcon: '🌍',
+                    earnedBadge: 'Earth Defender',
+                    badgeDescription: 'You understand earthquake safety protocols!'
+                };
+            } else if (percentage >= 60) {
+                return {
+                    emoji: '📚',
+                    title: 'Keep Learning!',
+                    badge: 'Safety Student',
+                    badgeClass: 'badge-medium',
+                    message: 'You\'re on the right track! Review the materials and try again.',
+                    badgeIcon: '📖',
+                    earnedBadge: 'Safety Student',
+                    badgeDescription: 'You\'re learning the basics of safety!'
+                };
+            } else {
+                return {
+                    emoji: '📖',
+                    title: 'Study More',
+                    badge: 'Needs Improvement',
+                    badgeClass: 'badge-high',
+                    message: 'Keep studying! Safety knowledge is crucial for everyone.',
+                    badgeIcon: '📚',
+                    earnedBadge: 'Safety Beginner',
+                    badgeDescription: 'Everyone starts somewhere. Keep learning!'
+                };
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            hasAnswered = false;
+
+            document.getElementById('quiz-content').classList.remove('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('current-score').textContent = '0';
+
+            displayQuestion();
+        }
+    </script>
+</body>
+</html>

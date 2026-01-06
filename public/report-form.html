@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Safety Issue - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <a href="javascript:history.back()" class="btn btn-outline btn-sm">← Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">⚠️ Report Safety Issue</h1>
+                    <p class="card-description">Help keep our campus safe by reporting potential hazards</p>
+                </div>
+                <form id="report-form" class="card-content">
+                    <div class="form-group">
+                        <label class="form-label">Building/Location *</label>
+                        <select class="form-select" required>
+                            <option value="">Select building...</option>
+                            <option value="Main Building">Main Building</option>
+                            <option value="Science Block">Science Block</option>
+                            <option value="Library">Library</option>
+                            <option value="Cafeteria">Cafeteria</option>
+                            <option value="Gymnasium">Gymnasium</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Issue Description *</label>
+                        <textarea class="form-textarea" placeholder="Describe the safety issue..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Severity Level *</label>
+                        <select class="form-select" required>
+                            <option value="">Select severity...</option>
+                            <option value="Critical">Critical - Immediate danger</option>
+                            <option value="High">High - Could cause injury</option>
+                            <option value="Medium">Medium - Potential risk</option>
+                            <option value="Low">Low - Minor concern</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Upload Photo (Optional)</label>
+                        <input type="file" class="form-input" accept="image/*">
+                        <p style="font-size: var(--font-size-sm); color: var(--gray-600); margin-top: var(--spacing-1);">
+                            Photos help us understand and address the issue faster
+                        </p>
+                    </div>
+                </form>
+                <div class="card-footer">
+                    <button type="submit" form="report-form" class="btn btn-primary w-full">Submit Report</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('report-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Report submitted successfully! Campus safety team will investigate within 24 hours.');
+            window.location.href = '/dashboard/student';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Safety Map - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <a href="javascript:history.back()" class="btn btn-outline btn-sm">← Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="mb-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1 class="card-title">🗺️ Interactive Campus Safety Map</h1>
+                    <p class="card-description">Click on any location to view safety information and evacuation routes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Legend -->
+        <section class="mb-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Map Legend</h3>
+                </div>
+                <div class="card-content">
+                    <div class="flex justify-between items-center" style="gap: var(--spacing-4); flex-wrap: wrap;">
+                        <div class="flex items-center" style="gap: var(--spacing-2);">
+                            <div class="map-pin safe"></div>
+                            <span>Safe Zone</span>
+                        </div>
+                        <div class="flex items-center" style="gap: var(--spacing-2);">
+                            <div class="map-pin medium"></div>
+                            <span>Medium Risk</span>
+                        </div>
+                        <div class="flex items-center" style="gap: var(--spacing-2);">
+                            <div class="map-pin high"></div>
+                            <span>High Risk</span>
+                        </div>
+                        <div class="flex items-center" style="gap: var(--spacing-2);">
+                            <div style="width: 12px; height: 12px; background: var(--success-color); border-radius: 2px;"></div>
+                            <span>Assembly Point</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Campus Map -->
+        <section class="mb-8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="map-container" style="position: relative; height: 500px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: var(--border-radius-lg); overflow: hidden;">
+                        <!-- Campus Buildings -->
+                        <div class="building" style="position: absolute; top: 50px; left: 50px; width: 120px; height: 80px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-weight: 600; box-shadow: var(--shadow-sm);">
+                            Main Building
+                        </div>
+                        
+                        <div class="building" style="position: absolute; top: 180px; left: 200px; width: 100px; height: 60px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-weight: 600; box-shadow: var(--shadow-sm);">
+                            Science Block
+                        </div>
+                        
+                        <div class="building" style="position: absolute; top: 280px; left: 80px; width: 90px; height: 70px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-weight: 600; box-shadow: var(--shadow-sm);">
+                            Library
+                        </div>
+                        
+                        <div class="building" style="position: absolute; top: 160px; left: 350px; width: 100px; height: 80px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-weight: 600; box-shadow: var(--shadow-sm);">
+                            Cafeteria
+                        </div>
+                        
+                        <!-- Assembly Points -->
+                        <div class="assembly-point" style="position: absolute; top: 380px; right: 100px; width: 140px; height: 40px; background: var(--success-color); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; box-shadow: var(--shadow-sm);">
+                            Assembly Point A
+                        </div>
+                        
+                        <div class="assembly-point" style="position: absolute; top: 50px; right: 150px; width: 140px; height: 40px; background: var(--success-color); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; box-shadow: var(--shadow-sm);">
+                            Assembly Point B
+                        </div>
+
+                        <!-- Interactive Pins -->
+                        <div class="map-pin safe pin-clickable" 
+                             style="top: 90px; left: 110px;" 
+                             data-location="Main Entrance"
+                             data-risk="Low"
+                             data-route="Primary Route A"
+                             data-description="Main building entrance with wide corridors">
+                        </div>
+
+                        <div class="map-pin high pin-clickable" 
+                             style="top: 210px; left: 250px;" 
+                             data-location="Science Lab Block"
+                             data-risk="High"
+                             data-route="Emergency Route B"
+                             data-description="Chemistry and Physics labs - potential hazardous materials">
+                        </div>
+
+                        <div class="map-pin safe pin-clickable" 
+                             style="top: 400px; right: 170px;" 
+                             data-location="Assembly Point A"
+                             data-risk="Safe"
+                             data-route="All Routes"
+                             data-description="Primary emergency assembly area - open field">
+                        </div>
+
+                        <div class="map-pin medium pin-clickable" 
+                             style="top: 200px; left: 400px;" 
+                             data-location="Cafeteria"
+                             data-risk="Medium"
+                             data-route="Route C"
+                             data-description="Large common area - multiple exit points">
+                        </div>
+
+                        <div class="map-pin safe pin-clickable" 
+                             style="top: 315px; left: 125px;" 
+                             data-location="Library"
+                             data-risk="Low"
+                             data-route="Route A"
+                             data-description="Multi-story library with emergency stairwells">
+                        </div>
+
+                        <!-- Evacuation Routes (simplified lines) -->
+                        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#10b981" />
+                                </marker>
+                            </defs>
+                            <!-- Route from Main Building to Assembly A -->
+                            <path d="M170 90 Q300 200 570 420" stroke="#10b981" stroke-width="3" fill="none" 
+                                  stroke-dasharray="10,5" marker-end="url(#arrowhead)" opacity="0.7" />
+                            <!-- Route from Science Block to Assembly A -->
+                            <path d="M300 210 Q450 300 570 400" stroke="#10b981" stroke-width="3" fill="none" 
+                                  stroke-dasharray="10,5" marker-end="url(#arrowhead)" opacity="0.7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location Details Modal -->
+        <div id="location-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+            <div class="card" style="max-width: 500px; margin: var(--spacing-4);">
+                <div class="card-header">
+                    <h3 class="card-title" id="modal-title">Location Details</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2" style="gap: var(--spacing-4); margin-bottom: var(--spacing-4);">
+                        <div>
+                            <strong>Risk Level:</strong>
+                            <div id="modal-risk" class="badge mt-1"></div>
+                        </div>
+                        <div>
+                            <strong>Evacuation Route:</strong>
+                            <div id="modal-route" class="mt-1"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <strong>Description:</strong>
+                        <p id="modal-description" class="mt-1"></p>
+                    </div>
+                    <div class="mb-4">
+                        <strong>Recommended Actions:</strong>
+                        <ul id="modal-actions" class="mt-1" style="padding-left: var(--spacing-6);"></ul>
+                    </div>
+                </div>
+                <div class="card-footer flex justify-between" style="gap: var(--spacing-3);">
+                    <button class="btn btn-outline w-full" id="close-modal">Close</button>
+                    <button class="btn btn-warning w-full" id="start-drill-btn">Start Drill for this Zone</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pins = document.querySelectorAll('.pin-clickable');
+            const modal = document.getElementById('location-modal');
+            const closeBtn = document.getElementById('close-modal');
+            const startDrillBtn = document.getElementById('start-drill-btn');
+
+            // Pin click handlers
+            pins.forEach(pin => {
+                pin.addEventListener('click', function() {
+                    const location = this.dataset.location;
+                    const risk = this.dataset.risk;
+                    const route = this.dataset.route;
+                    const description = this.dataset.description;
+
+                    // Update modal content
+                    document.getElementById('modal-title').textContent = location;
+                    document.getElementById('modal-route').textContent = route;
+                    document.getElementById('modal-description').textContent = description;
+
+                    // Set risk badge
+                    const riskBadge = document.getElementById('modal-risk');
+                    riskBadge.textContent = risk;
+                    riskBadge.className = 'badge ' + getRiskClass(risk);
+
+                    // Set recommended actions based on risk level
+                    const actionsList = document.getElementById('modal-actions');
+                    actionsList.innerHTML = getRecommendedActions(risk, location);
+
+                    // Show modal
+                    modal.classList.remove('hidden');
+                    modal.style.display = 'flex';
+                });
+            });
+
+            // Modal close handlers
+            closeBtn.addEventListener('click', closeModal);
+            startDrillBtn.addEventListener('click', function() {
+                alert('Drill initiated for this zone! All occupants will be notified.');
+                closeModal();
+            });
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+
+            function getRiskClass(risk) {
+                switch(risk.toLowerCase()) {
+                    case 'high': return 'badge-critical';
+                    case 'medium': return 'badge-medium';
+                    case 'low': return 'badge-low';
+                    case 'safe': return 'badge-safe';
+                    default: return 'badge-low';
+                }
+            }
+
+            function getRecommendedActions(risk, location) {
+                const actions = {
+                    'High': [
+                        'Exercise extreme caution when entering',
+                        'Ensure all safety equipment is functional',
+                        'Have emergency personnel on standby',
+                        'Regular safety inspections required'
+                    ],
+                    'Medium': [
+                        'Follow standard safety protocols',
+                        'Be aware of emergency exits',
+                        'Report any safety concerns immediately',
+                        'Keep emergency contact numbers handy'
+                    ],
+                    'Low': [
+                        'Standard precautions apply',
+                        'Familiarize yourself with exit routes',
+                        'Report maintenance issues promptly'
+                    ],
+                    'Safe': [
+                        'Designated safe gathering area',
+                        'Proceed here during emergencies',
+                        'Wait for further instructions',
+                        'Help others reach this location'
+                    ]
+                };
+
+                const riskActions = actions[risk] || actions['Low'];
+                return riskActions.map(action => `<li>${action}</li>`).join('');
+            }
+        });
+    </script>
+</body>
+</html>

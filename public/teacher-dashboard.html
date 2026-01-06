@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <span>Mrs. Sarah Johnson</span>
+                    <span class="badge badge-safe">Greenfield High School</span>
+                    <a href="/" class="btn btn-outline btn-sm">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Emergency Alert Section -->
+        <section class="mb-8">
+            <div class="card" style="border-left: 4px solid var(--primary-color);">
+                <div class="card-header">
+                    <h1 class="card-title text-primary">🚨 Emergency Alert System</h1>
+                    <p class="card-description">Send immediate alerts to all staff members</p>
+                </div>
+                <div class="card-content">
+                    <button class="btn btn-primary btn-lg w-full" id="send-alert-btn">
+                        Send All-Staff Alert
+                    </button>
+                    <div id="alert-status" class="mt-4 text-center hidden">
+                        <div class="badge badge-safe">✓ Alert sent successfully to all staff members</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Cards -->
+        <div class="grid grid-3 mb-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">👥 Manage Classes</h2>
+                    <p class="card-description">Oversee class evacuations and drills</p>
+                </div>
+                <div class="card-content">
+                    <div class="space-y-3" id="classes-list">
+                        <div class="flex justify-between items-center" style="padding: var(--spacing-3); border: 1px solid var(--gray-200); border-radius: var(--border-radius); margin-bottom: var(--spacing-2);">
+                            <div>
+                                <div class="font-weight-500">10-A Mathematics</div>
+                                <div style="font-size: var(--font-size-sm); color: var(--gray-600);">28 students • Room 101</div>
+                            </div>
+                            <button class="btn btn-warning btn-sm drill-btn" data-class="10-A">Start Drill</button>
+                        </div>
+                        <div class="flex justify-between items-center" style="padding: var(--spacing-3); border: 1px solid var(--gray-200); border-radius: var(--border-radius); margin-bottom: var(--spacing-2);">
+                            <div>
+                                <div class="font-weight-500">11-B Physics</div>
+                                <div style="font-size: var(--font-size-sm); color: var(--gray-600);">25 students • Science Lab 2</div>
+                            </div>
+                            <button class="btn btn-warning btn-sm drill-btn" data-class="11-B">Start Drill</button>
+                        </div>
+                        <div class="flex justify-between items-center" style="padding: var(--spacing-3); border: 1px solid var(--gray-200); border-radius: var(--border-radius);">
+                            <div>
+                                <div class="font-weight-500">12-A Chemistry</div>
+                                <div style="font-size: var(--font-size-sm); color: var(--gray-600);">22 students • Science Lab 1</div>
+                            </div>
+                            <button class="btn btn-warning btn-sm drill-btn" data-class="12-A">Start Drill</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📋 Student Reports</h2>
+                    <p class="card-description">Recent safety reports from students</p>
+                </div>
+                <div class="card-content">
+                    <div id="reports-list">
+                        <div class="activity-item">
+                            <div class="activity-icon bg-primary">⚠️</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Emergency exit light broken</div>
+                                <div class="activity-time">
+                                    <span class="badge badge-high">High</span>
+                                    Main Building • 2 hours ago
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-warning">🧯</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Fire extinguisher missing</div>
+                                <div class="activity-time">
+                                    <span class="badge badge-critical">Critical</span>
+                                    Science Block • 1 day ago
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Assembly point sign faded</div>
+                                <div class="activity-time">
+                                    <span class="badge badge-medium">Medium</span>
+                                    Library • 3 days ago
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/admin-dashboard" class="btn btn-outline w-full">View All Reports</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📅 Training Schedule</h2>
+                    <p class="card-description">Upcoming safety training sessions</p>
+                </div>
+                <div class="card-content">
+                    <div class="space-y-3">
+                        <div style="padding: var(--spacing-3); background: var(--gray-100); border-radius: var(--border-radius); margin-bottom: var(--spacing-3);">
+                            <div class="font-weight-500">Fire Safety Training</div>
+                            <div style="font-size: var(--font-size-sm); color: var(--gray-600);">Tomorrow • 2:00 PM • Auditorium</div>
+                        </div>
+                        <div style="padding: var(--spacing-3); background: var(--gray-100); border-radius: var(--border-radius); margin-bottom: var(--spacing-3);">
+                            <div class="font-weight-500">Earthquake Response Drill</div>
+                            <div style="font-size: var(--font-size-sm); color: var(--gray-600);">Friday • 10:00 AM • All Classrooms</div>
+                        </div>
+                        <div style="padding: var(--spacing-3); background: var(--gray-100); border-radius: var(--border-radius);">
+                            <div class="font-weight-500">First Aid Workshop</div>
+                            <div style="font-size: var(--font-size-sm); color: var(--gray-600);">Next Monday • 3:30 PM • Gym</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity & Statistics -->
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📊 Recent Drill Results</h3>
+                </div>
+                <div class="card-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number">4:32</span>
+                            <span class="stat-label">Avg Evacuation Time</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">98%</span>
+                            <span class="stat-label">Participation Rate</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 88%;"></div>
+                        </div>
+                        <div class="progress-text">Overall Drill Performance: 88%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Class Status Overview</h3>
+                </div>
+                <div class="card-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number">75</span>
+                            <span class="stat-label">Students Present</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number">68</span>
+                            <span class="stat-label">Training Complete</span>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="activity-item">
+                            <div class="activity-icon bg-success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">All classes checked in</div>
+                                <div class="activity-time">Last updated: 5 minutes ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Drill Confirmation Modal -->
+    <div id="drill-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="max-width: 400px; margin: var(--spacing-4);">
+            <div class="card-header">
+                <h3 class="card-title">Start Evacuation Drill</h3>
+                <p class="card-description">This will initiate an emergency drill for <span id="drill-class-name"></span></p>
+            </div>
+            <div class="card-content">
+                <p>Are you sure you want to start the evacuation drill? This will:</p>
+                <ul style="margin-top: var(--spacing-2); padding-left: var(--spacing-6);">
+                    <li>Alert all students in the class</li>
+                    <li>Begin the evacuation timer</li>
+                    <li>Notify administration</li>
+                </ul>
+            </div>
+            <div class="card-footer flex justify-between" style="gap: var(--spacing-3);">
+                <button class="btn btn-outline w-full" id="cancel-drill">Cancel</button>
+                <button class="btn btn-primary w-full" id="confirm-drill">Start Drill</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle send alert button
+            document.getElementById('send-alert-btn').addEventListener('click', function() {
+                const btn = this;
+                const status = document.getElementById('alert-status');
+                
+                // Disable button and show loading
+                btn.disabled = true;
+                btn.textContent = 'Sending Alert...';
+                
+                // Simulate API call
+                setTimeout(() => {
+                    btn.textContent = 'Alert Sent!';
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-success');
+                    status.classList.remove('hidden');
+                    
+                    // Reset after 3 seconds
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.textContent = 'Send All-Staff Alert';
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-primary');
+                        status.classList.add('hidden');
+                    }, 3000);
+                }, 1500);
+            });
+
+            // Handle drill buttons
+            const drillButtons = document.querySelectorAll('.drill-btn');
+            const modal = document.getElementById('drill-modal');
+            const className = document.getElementById('drill-class-name');
+            const cancelBtn = document.getElementById('cancel-drill');
+            const confirmBtn = document.getElementById('confirm-drill');
+            
+            let currentClass = '';
+
+            drillButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    currentClass = this.dataset.class;
+                    className.textContent = currentClass;
+                    modal.classList.remove('hidden');
+                    modal.style.display = 'flex';
+                });
+            });
+
+            cancelBtn.addEventListener('click', function() {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            });
+
+            confirmBtn.addEventListener('click', function() {
+                // Simulate starting drill
+                alert(`Evacuation drill started for class ${currentClass}!`);
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+                
+                // In a real app, this would redirect to QR muster page
+                window.location.href = '/qr-muster';
+            });
+
+            // Close modal on outside click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

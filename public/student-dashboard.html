@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <span>Welcome, Alex Student</span>
+                    <span class="badge badge-safe">Greenfield High School</span>
+                    <a href="/" class="btn btn-outline btn-sm">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Welcome Section -->
+        <section class="mb-8">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">Dashboard Overview</h1>
+                    <p class="card-description">Stay prepared and informed about campus safety</p>
+                </div>
+                <div class="card-content">
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 72%" id="preparedness-bar"></div>
+                    </div>
+                    <div class="progress-text">
+                        <strong>Preparedness Level: <span id="preparedness-level">72%</span></strong>
+                        <br>Complete more training modules to improve your score
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Action Cards -->
+        <section class="grid grid-3 mb-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🗺️ Campus Safety Map</h2>
+                    <p class="card-description">Interactive map with safety zones and evacuation routes</p>
+                </div>
+                <div class="card-content">
+                    <p>View real-time safety information for all campus locations.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/campus-map" class="btn btn-primary w-full">Open Map</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🎮 Learn & Play</h2>
+                    <p class="card-description">Gamified safety training and knowledge assessment</p>
+                </div>
+                <div class="card-content">
+                    <p>Take interactive quizzes and earn safety badges.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/quiz" class="btn btn-success w-full">Start Quiz</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🚨 Start Simulation</h2>
+                    <p class="card-description">Practice emergency response procedures</p>
+                </div>
+                <div class="card-content">
+                    <p>Choose from Fire, Earthquake, or Flood scenarios.</p>
+                </div>
+                <div class="card-footer">
+                    <a href="/simulation" class="btn btn-warning w-full">Begin Training</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress and Achievements -->
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📈 Recent Activity</h3>
+                </div>
+                <div class="card-content">
+                    <ul class="activity-list" id="recent-activity">
+                        <li class="activity-item">
+                            <div class="activity-icon bg-success">✓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Fire Safety Quiz Completed</div>
+                                <div class="activity-time">Score: 85% - 2 hours ago</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-primary">🎯</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Earthquake Drill Participated</div>
+                                <div class="activity-time">Evacuation time: 4:32 - Yesterday</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-warning">📚</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Safety Module Viewed</div>
+                                <div class="activity-time">Flood Preparedness - 3 days ago</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">🏆 Achievements</h3>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-2" style="gap: var(--spacing-3);">
+                        <div class="text-center">
+                            <div style="font-size: 2rem; margin-bottom: var(--spacing-2);">🔥</div>
+                            <div class="badge badge-high">Fire Guard</div>
+                            <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Earned</div>
+                        </div>
+                        <div class="text-center">
+                            <div style="font-size: 2rem; margin-bottom: var(--spacing-2);">🌍</div>
+                            <div class="badge badge-medium">Earth Defender</div>
+                            <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Earned</div>
+                        </div>
+                        <div class="text-center" style="opacity: 0.5;">
+                            <div style="font-size: 2rem; margin-bottom: var(--spacing-2);">🌊</div>
+                            <div class="badge badge-low">Flood Expert</div>
+                            <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Locked</div>
+                        </div>
+                        <div class="text-center" style="opacity: 0.5;">
+                            <div style="font-size: 2rem; margin-bottom: var(--spacing-2);">🎖️</div>
+                            <div class="badge badge-safe">Safety Champion</div>
+                            <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Locked</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Action Button -->
+    <button class="fab" id="report-btn" title="Report Unsafe Area">
+        ⚠️
+    </button>
+
+    <script src="/js/main.js"></script>
+    <script>
+        // Initialize student dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle report button click
+            document.getElementById('report-btn').addEventListener('click', function() {
+                window.location.href = '/report-form';
+            });
+            
+            // Load recent activity from API
+            loadRecentActivity();
+        });
+
+        function loadRecentActivity() {
+            // This would typically fetch from the API
+            // For now, the activity is already rendered in the HTML
+            console.log('Recent activity loaded');
+        }
+    </script>
+</body>
+</html>

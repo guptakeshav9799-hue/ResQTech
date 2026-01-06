@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Simulation - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <a href="javascript:history.back()" class="btn btn-outline btn-sm">← Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="simulation-container">
+            <!-- Scenario Selection -->
+            <div id="scenario-selection">
+                <section class="mb-8">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h1 class="card-title">🚨 Emergency Simulation Training</h1>
+                            <p class="card-description">Choose a disaster scenario to practice your emergency response</p>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="scenario-selection">
+                    <div class="scenario-card" data-scenario="fire">
+                        <div class="scenario-icon">🔥</div>
+                        <h3>Fire Emergency</h3>
+                        <p>Practice fire evacuation procedures and safety protocols</p>
+                    </div>
+                    
+                    <div class="scenario-card" data-scenario="earthquake">
+                        <div class="scenario-icon">🌍</div>
+                        <h3>Earthquake</h3>
+                        <p>Learn Drop, Cover, and Hold techniques</p>
+                    </div>
+                    
+                    <div class="scenario-card" data-scenario="flood">
+                        <div class="scenario-icon">🌊</div>
+                        <h3>Flood Emergency</h3>
+                        <p>Understand flood response and evacuation routes</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Simulation Steps -->
+            <div id="simulation-steps" class="hidden">
+                <div class="step-indicator">
+                    <div class="step-number" id="step-number">1</div>
+                    <div>
+                        <span>Step <span id="current-step">1</span> of <span id="total-steps">4</span></span>
+                    </div>
+                </div>
+
+                <div class="step-content">
+                    <h2 class="step-title" id="step-title">Loading...</h2>
+                    <p class="step-description" id="step-description">Please wait...</p>
+                    <div class="step-timer" id="step-timer">5</div>
+                    <div class="progress-container mt-4">
+                        <div class="progress-bar" id="timer-progress" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <button class="btn btn-primary btn-lg" id="next-step-btn" style="display: none;">Next Step</button>
+                    <button class="btn btn-outline btn-lg" id="skip-step-btn" style="display: none;">Skip Auto-Advance</button>
+                </div>
+            </div>
+
+            <!-- Simulation Complete -->
+            <div id="simulation-complete" class="hidden">
+                <div class="card text-center">
+                    <div class="card-content">
+                        <div style="font-size: 4rem; margin-bottom: var(--spacing-4);">✅</div>
+                        <h2 class="card-title">Simulation Complete!</h2>
+                        <div class="stat-number text-success mb-4" id="completion-time">4:23</div>
+                        <p class="mb-6">
+                            <strong>Excellent response!</strong><br>
+                            You've successfully completed the <span id="completed-scenario">Fire</span> emergency simulation.
+                        </p>
+                        
+                        <!-- Performance Stats -->
+                        <div class="grid grid-3 mb-6" style="gap: var(--spacing-4);">
+                            <div class="stat-card">
+                                <span class="stat-number text-primary" id="response-time">4:23</span>
+                                <span class="stat-label">Response Time</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number text-success">95%</span>
+                                <span class="stat-label">Accuracy</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-number text-warning">A</span>
+                                <span class="stat-label">Grade</span>
+                            </div>
+                        </div>
+
+                        <!-- Key Actions Completed -->
+                        <div class="card mb-6" style="background: var(--light-bg);">
+                            <div class="card-header">
+                                <h3 class="card-title">✅ Actions Completed</h3>
+                            </div>
+                            <div class="card-content">
+                                <ul id="completed-actions" style="text-align: left; list-style: none; padding-left: 0;">
+                                    <!-- Actions will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Safety Reminder -->
+                        <div class="card mb-6" style="border-left: 4px solid var(--success-color);">
+                            <div class="card-content">
+                                <h4 style="color: var(--success-color); margin-bottom: var(--spacing-2);">🎯 Remember</h4>
+                                <p id="safety-reminder" style="text-align: left;">
+                                    In a real emergency, stay calm and follow the procedures you just practiced. 
+                                    Your safety and the safety of others depends on quick, decisive action.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer flex justify-between" style="gap: var(--spacing-3);">
+                        <button class="btn btn-outline w-full" id="restart-simulation">Try Another Scenario</button>
+                        <a href="/qr-muster" class="btn btn-success w-full">Mark Yourself Safe</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script>
+        let currentScenario = '';
+        let currentStepIndex = 0;
+        let scenarioSteps = [];
+        let startTime = null;
+        let stepTimer = null;
+        let isAutoAdvancing = true;
+
+        const scenarios = {
+            fire: {
+                name: 'Fire Emergency',
+                icon: '🔥',
+                steps: [
+                    {
+                        title: '🚨 FIRE ALERT ACTIVATED',
+                        description: 'A fire has been detected in the building. Stay calm and prepare to evacuate immediately.',
+                        duration: 5,
+                        action: 'Alert received - Stay calm'
+                    },
+                    {
+                        title: '🚪 EVACUATE IMMEDIATELY',
+                        description: 'Leave the building using the nearest safe exit. Do not use elevators. Walk quickly but do not run.',
+                        duration: 6,
+                        action: 'Exit building via nearest safe route'
+                    },
+                    {
+                        title: '🔥 STAY LOW IF SMOKY',
+                        description: 'If you encounter smoke, stay low to the ground where air is cleaner. Cover your nose and mouth.',
+                        duration: 4,
+                        action: 'Stay low under smoke level'
+                    },
+                    {
+                        title: '📍 REACH ASSEMBLY POINT',
+                        description: 'Proceed to the designated assembly point. Wait for further instructions from emergency personnel.',
+                        duration: 3,
+                        action: 'Arrived at Assembly Point A'
+                    }
+                ],
+                reminder: 'In a real fire emergency, never go back inside for belongings. Your life is more important than any possession.'
+            },
+            earthquake: {
+                name: 'Earthquake Emergency',
+                icon: '🌍',
+                steps: [
+                    {
+                        title: '🌍 EARTHQUAKE DETECTED',
+                        description: 'Strong ground shaking detected! Earthquake in progress. Take immediate protective action.',
+                        duration: 3,
+                        action: 'Earthquake detected - Take cover'
+                    },
+                    {
+                        title: '⬇️ DROP TO HANDS AND KNEES',
+                        description: 'Immediately drop to your hands and knees. This position prevents you from being knocked over.',
+                        duration: 2,
+                        action: 'Dropped to hands and knees'
+                    },
+                    {
+                        title: '🛡️ TAKE COVER UNDER DESK',
+                        description: 'Get under a sturdy desk or table if available. Protect your head and neck with your arms.',
+                        duration: 4,
+                        action: 'Taking cover under desk'
+                    },
+                    {
+                        title: '🤝 HOLD ON AND WAIT',
+                        description: 'Hold on to your shelter and be prepared to move with it. Stay in position until shaking stops.',
+                        duration: 8,
+                        action: 'Holding position until shaking stops'
+                    },
+                    {
+                        title: '🚶 EVACUATE WHEN SAFE',
+                        description: 'Once shaking stops, carefully evacuate the building. Watch for hazards like broken glass.',
+                        duration: 5,
+                        action: 'Safely evacuated building'
+                    }
+                ],
+                reminder: 'Remember: Drop, Cover, and Hold On! Do not run outside during shaking - most injuries occur from falling objects.'
+            },
+            flood: {
+                name: 'Flood Emergency',
+                icon: '🌊',
+                steps: [
+                    {
+                        title: '🌊 FLOOD WARNING ISSUED',
+                        description: 'Flood warning has been issued for this area. Water levels are rising rapidly.',
+                        duration: 4,
+                        action: 'Flood warning received'
+                    },
+                    {
+                        title: '⬆️ MOVE TO HIGHER GROUND',
+                        description: 'Immediately move to the highest floor available. Avoid basements and ground-level areas.',
+                        duration: 5,
+                        action: 'Moving to higher ground'
+                    },
+                    {
+                        title: '🚫 AVOID FLOOD WATER',
+                        description: 'Never walk or drive through flood water. Just 6 inches of moving water can knock you down.',
+                        duration: 4,
+                        action: 'Avoiding flood water'
+                    },
+                    {
+                        title: '📞 CALL FOR HELP IF NEEDED',
+                        description: 'If trapped, call emergency services. Signal for help from upper floors or rooftops.',
+                        duration: 3,
+                        action: 'Emergency services contacted'
+                    }
+                ],
+                reminder: 'Turn Around, Don\'t Drown! Most flood fatalities occur in vehicles. When in doubt, find another route.'
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Scenario selection
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const scenario = this.dataset.scenario;
+                    startSimulation(scenario);
+                });
+            });
+
+            document.getElementById('next-step-btn').addEventListener('click', nextStep);
+            document.getElementById('skip-step-btn').addEventListener('click', toggleAutoAdvance);
+            document.getElementById('restart-simulation').addEventListener('click', restartSimulation);
+        }
+
+        function startSimulation(scenario) {
+            currentScenario = scenario;
+            scenarioSteps = scenarios[scenario].steps;
+            currentStepIndex = 0;
+            startTime = Date.now();
+
+            document.getElementById('scenario-selection').classList.add('hidden');
+            document.getElementById('simulation-steps').classList.remove('hidden');
+
+            document.getElementById('total-steps').textContent = scenarioSteps.length;
+            
+            showStep();
+        }
+
+        function showStep() {
+            if (currentStepIndex >= scenarioSteps.length) {
+                completeSimulation();
+                return;
+            }
+
+            const step = scenarioSteps[currentStepIndex];
+            
+            document.getElementById('step-number').textContent = currentStepIndex + 1;
+            document.getElementById('current-step').textContent = currentStepIndex + 1;
+            document.getElementById('step-title').textContent = step.title;
+            document.getElementById('step-description').textContent = step.description;
+
+            // Hide buttons initially
+            document.getElementById('next-step-btn').style.display = 'none';
+            document.getElementById('skip-step-btn').style.display = isAutoAdvancing ? 'inline-block' : 'none';
+
+            startStepTimer(step.duration);
+        }
+
+        function startStepTimer(duration) {
+            let timeLeft = duration;
+            const timerElement = document.getElementById('step-timer');
+            const progressElement = document.getElementById('timer-progress');
+
+            timerElement.textContent = timeLeft;
+            progressElement.style.width = '100%';
+
+            stepTimer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                const progressPercent = (timeLeft / duration) * 100;
+                progressElement.style.width = progressPercent + '%';
+
+                if (timeLeft <= 0) {
+                    clearInterval(stepTimer);
+                    if (isAutoAdvancing) {
+                        nextStep();
+                    } else {
+                        document.getElementById('next-step-btn').style.display = 'inline-block';
+                        timerElement.textContent = 'Ready';
+                        progressElement.style.width = '0%';
+                    }
+                }
+            }, 1000);
+        }
+
+        function nextStep() {
+            clearInterval(stepTimer);
+            currentStepIndex++;
+            showStep();
+        }
+
+        function toggleAutoAdvance() {
+            isAutoAdvancing = false;
+            clearInterval(stepTimer);
+            
+            document.getElementById('next-step-btn').style.display = 'inline-block';
+            document.getElementById('skip-step-btn').style.display = 'none';
+            document.getElementById('step-timer').textContent = 'Manual';
+            document.getElementById('timer-progress').style.width = '0%';
+        }
+
+        function completeSimulation() {
+            const endTime = Date.now();
+            const totalTime = Math.round((endTime - startTime) / 1000);
+            const minutes = Math.floor(totalTime / 60);
+            const seconds = totalTime % 60;
+            const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            document.getElementById('simulation-steps').classList.add('hidden');
+            document.getElementById('simulation-complete').classList.remove('hidden');
+
+            // Update completion details
+            document.getElementById('completed-scenario').textContent = scenarios[currentScenario].name;
+            document.getElementById('completion-time').textContent = timeString;
+            document.getElementById('response-time').textContent = timeString;
+            document.getElementById('safety-reminder').textContent = scenarios[currentScenario].reminder;
+
+            // Show completed actions
+            const actionsList = document.getElementById('completed-actions');
+            actionsList.innerHTML = '';
+            
+            scenarioSteps.forEach((step, index) => {
+                const li = document.createElement('li');
+                li.style.marginBottom = 'var(--spacing-2)';
+                li.innerHTML = `
+                    <div class="flex items-center" style="gap: var(--spacing-2);">
+                        <div style="color: var(--success-color); font-size: var(--font-size-lg);">✅</div>
+                        <span>${step.action}</span>
+                    </div>
+                `;
+                actionsList.appendChild(li);
+            });
+        }
+
+        function restartSimulation() {
+            currentScenario = '';
+            currentStepIndex = 0;
+            scenarioSteps = [];
+            startTime = null;
+            isAutoAdvancing = true;
+            
+            clearInterval(stepTimer);
+
+            document.getElementById('simulation-complete').classList.add('hidden');
+            document.getElementById('scenario-selection').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

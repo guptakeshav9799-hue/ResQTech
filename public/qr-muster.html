@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Muster Point - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <span class="badge badge-warning">Emergency Mode</span>
+                    <a href="javascript:history.back()" class="btn btn-outline btn-sm">← Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Assembly Point Status -->
+        <section class="mb-8">
+            <div class="card" style="border-left: 4px solid var(--success-color);">
+                <div class="card-header text-center">
+                    <h1 class="card-title">📍 Assembly Point A</h1>
+                    <p class="card-description">Emergency Evacuation Headcount</p>
+                </div>
+                <div class="card-content text-center">
+                    <div class="stat-number text-primary mb-4">
+                        <span id="safe-count">35</span>/<span id="total-count">120</span> Safe
+                    </div>
+                    <div class="progress-container mb-4">
+                        <div class="progress-bar" id="muster-progress" style="width: 29%;"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progress-percentage">29%</span> of expected personnel accounted for
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Actions -->
+        <section class="grid grid-2 mb-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">📱 QR Check-In</h2>
+                    <p class="card-description">Scan to mark yourself safe</p>
+                </div>
+                <div class="card-content text-center">
+                    <!-- QR Code Placeholder -->
+                    <div style="width: 150px; height: 150px; margin: 0 auto var(--spacing-4) auto; border: 2px solid var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; background: var(--white);">
+                        <div style="text-align: center; color: var(--gray-600);">
+                            <div style="font-size: 2rem; margin-bottom: var(--spacing-2);">📱</div>
+                            <div style="font-size: var(--font-size-sm);">QR Code<br>Scanner</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-success w-full" id="simulate-scan">
+                        Simulate QR Scan
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">⚡ Quick Stats</h2>
+                    <p class="card-description">Real-time evacuation metrics</p>
+                </div>
+                <div class="card-content">
+                    <div class="stats-grid">
+                        <div class="text-center">
+                            <div class="stat-number text-success" id="checked-in">35</div>
+                            <div class="stat-label">Checked In</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="stat-number text-warning" id="missing-count">85</div>
+                            <div class="stat-label">Missing</div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="activity-item">
+                            <div class="activity-icon bg-success">⏱️</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Evacuation Time</div>
+                                <div class="activity-time" id="evacuation-timer">3:45</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personnel Lists -->
+        <div class="grid grid-2">
+            <!-- Safe Personnel -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-success">✅ Personnel Safe</h3>
+                    <p class="card-description">Confirmed at assembly point</p>
+                </div>
+                <div class="card-content">
+                    <ul class="activity-list" id="safe-list">
+                        <li class="activity-item">
+                            <div class="activity-icon bg-success">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Alice Cooper</div>
+                                <div class="activity-time">Class 10-A • 3:42</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-success">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Bob Wilson</div>
+                                <div class="activity-time">Class 10-A • 3:43</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-success">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">David Lee</div>
+                                <div class="activity-time">Class 10-B • 3:41</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-success">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Emma Thompson</div>
+                                <div class="activity-time">Class 11-A • 3:44</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <span class="text-gray">+ 31 more personnel safe</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Missing Personnel -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title text-warning">⚠️ Missing Personnel</h3>
+                    <p class="card-description">Not yet accounted for</p>
+                </div>
+                <div class="card-content">
+                    <ul class="activity-list" id="missing-list">
+                        <li class="activity-item">
+                            <div class="activity-icon bg-warning">❓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Carol Brown</div>
+                                <div class="activity-time">Class 10-B • Last seen: Library</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-warning">❓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Frank Miller</div>
+                                <div class="activity-time">Class 11-C • Last seen: Science Lab</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-warning">❓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Grace Davis</div>
+                                <div class="activity-time">Class 12-A • Last seen: Cafeteria</div>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-icon bg-warning">❓</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Henry Clark</div>
+                                <div class="activity-time">Staff • Last seen: Admin Office</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <span class="text-gray">+ 81 more personnel missing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Actions -->
+        <section class="mt-8">
+            <div class="card" style="border-left: 4px solid var(--primary-color);">
+                <div class="card-header">
+                    <h3 class="card-title text-primary">🚨 Emergency Actions</h3>
+                    <p class="card-description">Available actions for emergency coordinators</p>
+                </div>
+                <div class="card-content">
+                    <div class="grid grid-3" style="gap: var(--spacing-3);">
+                        <button class="btn btn-warning w-full" id="search-teams">
+                            Deploy Search Teams
+                        </button>
+                        <button class="btn btn-primary w-full" id="contact-emergency">
+                            Contact Emergency Services
+                        </button>
+                        <button class="btn btn-success w-full" id="generate-report">
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="scan-success-modal" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+        <div class="card" style="max-width: 400px; margin: var(--spacing-4);">
+            <div class="card-header text-center">
+                <div style="font-size: 3rem; color: var(--success-color); margin-bottom: var(--spacing-2);">✅</div>
+                <h3 class="card-title text-success">Successfully Checked In!</h3>
+            </div>
+            <div class="card-content text-center">
+                <p>You have been marked safe at Assembly Point A.</p>
+                <div class="mt-4">
+                    <div class="badge badge-safe">Status: Safe</div>
+                </div>
+                <p class="mt-4 text-gray">
+                    Please remain at the assembly point until further instructions from emergency personnel.
+                </p>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary w-full" id="close-success-modal">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        let safeCount = 35;
+        let totalCount = 120;
+        let evacuationStartTime = Date.now() - (3 * 60 + 45) * 1000; // Started 3:45 ago
+        let timerInterval;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            startEvacuationTimer();
+            simulateRealTimeUpdates();
+        });
+
+        function setupEventListeners() {
+            document.getElementById('simulate-scan').addEventListener('click', simulateQRScan);
+            document.getElementById('close-success-modal').addEventListener('click', closeSuccessModal);
+            
+            document.getElementById('search-teams').addEventListener('click', function() {
+                alert('Search teams have been deployed to locate missing personnel.');
+            });
+            
+            document.getElementById('contact-emergency').addEventListener('click', function() {
+                alert('Emergency services have been contacted and are en route.');
+            });
+            
+            document.getElementById('generate-report').addEventListener('click', function() {
+                window.location.href = '/after-action-report';
+            });
+        }
+
+        function simulateQRScan() {
+            // Simulate successful scan
+            const modal = document.getElementById('scan-success-modal');
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            
+            // Add current user to safe list (simulate)
+            addPersonToSafeList('Alex Student', 'Class 10-A', getCurrentTime());
+            
+            // Update counts
+            safeCount++;
+            updateCounts();
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('scan-success-modal');
+            modal.classList.add('hidden');
+            modal.style.display = 'none';
+        }
+
+        function addPersonToSafeList(name, classInfo, time) {
+            const safeList = document.getElementById('safe-list');
+            const newItem = document.createElement('li');
+            newItem.className = 'activity-item';
+            newItem.style.backgroundColor = '#f0fdf4';
+            newItem.style.borderRadius = 'var(--border-radius)';
+            newItem.style.padding = 'var(--spacing-2)';
+            newItem.innerHTML = `
+                <div class="activity-icon bg-success">👤</div>
+                <div class="activity-content">
+                    <div class="activity-title">${name}</div>
+                    <div class="activity-time">${classInfo} • ${time}</div>
+                </div>
+            `;
+            
+            // Add at the beginning of the list
+            safeList.insertBefore(newItem, safeList.firstChild);
+            
+            // Animate the new entry
+            setTimeout(() => {
+                newItem.style.backgroundColor = 'transparent';
+            }, 2000);
+        }
+
+        function updateCounts() {
+            document.getElementById('safe-count').textContent = safeCount;
+            document.getElementById('total-count').textContent = totalCount;
+            document.getElementById('checked-in').textContent = safeCount;
+            document.getElementById('missing-count').textContent = totalCount - safeCount;
+            
+            const percentage = Math.round((safeCount / totalCount) * 100);
+            document.getElementById('progress-percentage').textContent = percentage + '%';
+            document.getElementById('muster-progress').style.width = percentage + '%';
+        }
+
+        function startEvacuationTimer() {
+            timerInterval = setInterval(() => {
+                const elapsedTime = Date.now() - evacuationStartTime;
+                const minutes = Math.floor(elapsedTime / 60000);
+                const seconds = Math.floor((elapsedTime % 60000) / 1000);
+                const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                document.getElementById('evacuation-timer').textContent = timeString;
+            }, 1000);
+        }
+
+        function simulateRealTimeUpdates() {
+            // Simulate additional people checking in periodically
+            setInterval(() => {
+                if (safeCount < totalCount - 10 && Math.random() < 0.3) {
+                    const names = [
+                        'Sarah Johnson', 'Michael Brown', 'Jessica Lee', 'Robert Wilson',
+                        'Amanda Davis', 'Christopher Miller', 'Lauren Garcia', 'Daniel Anderson'
+                    ];
+                    const classes = [
+                        'Class 9-A', 'Class 9-B', 'Class 10-A', 'Class 10-B',
+                        'Class 11-A', 'Class 11-B', 'Class 12-A', 'Staff'
+                    ];
+                    
+                    const randomName = names[Math.floor(Math.random() * names.length)];
+                    const randomClass = classes[Math.floor(Math.random() * classes.length)];
+                    
+                    addPersonToSafeList(randomName, randomClass, getCurrentTime());
+                    safeCount++;
+                    updateCounts();
+                }
+            }, 15000); // Every 15 seconds
+        }
+
+        function getCurrentTime() {
+            const elapsedTime = Date.now() - evacuationStartTime;
+            const minutes = Math.floor(elapsedTime / 60000);
+            const seconds = Math.floor((elapsedTime % 60000) / 1000);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Cleanup timer when leaving page
+        window.addEventListener('beforeunload', function() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+        });
+    </script>
+</body>
+</html>

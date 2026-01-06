@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ResQTech</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">ResQTech</a>
+                <div class="user-info">
+                    <span>Dr. Michael Chen</span>
+                    <span class="badge badge-safe">Campus Administrator</span>
+                    <a href="/" class="btn btn-outline btn-sm">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Top Stats Overview -->
+        <section class="stats-grid mb-8">
+            <div class="card stat-card">
+                <span class="stat-number text-success">448</span>
+                <span class="stat-label">Students Safe</span>
+                <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Last Drill</div>
+            </div>
+            <div class="card stat-card">
+                <span class="stat-number text-primary">4:32</span>
+                <span class="stat-label">Avg Evacuation</span>
+                <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Target: 5:00</div>
+            </div>
+            <div class="card stat-card">
+                <span class="stat-number text-warning">3</span>
+                <span class="stat-label">Open Reports</span>
+                <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">This Week</div>
+            </div>
+            <div class="card stat-card">
+                <span class="stat-number text-success">88%</span>
+                <span class="stat-label">Resilience Score</span>
+                <div style="font-size: var(--font-size-xs); color: var(--gray-600); margin-top: var(--spacing-1);">Above Average</div>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Layout -->
+        <div class="grid grid-3 mb-8" style="grid-template-columns: 2fr 1fr 1fr;">
+            <!-- Campus Map Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">🗺️ Live Campus Map</h2>
+                    <p class="card-description">Real-time safety monitoring</p>
+                </div>
+                <div class="card-content">
+                    <div class="map-container" style="position: relative; height: 300px; background: #f0f9ff; border-radius: var(--border-radius);">
+                        <!-- Simplified campus map -->
+                        <div style="position: absolute; top: 20px; left: 20px; width: 80px; height: 60px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs);">Main Building</div>
+                        <div style="position: absolute; top: 100px; left: 120px; width: 60px; height: 40px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs);">Science</div>
+                        <div style="position: absolute; top: 200px; left: 50px; width: 70px; height: 50px; background: var(--gray-300); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs);">Library</div>
+                        <div style="position: absolute; top: 180px; right: 40px; width: 100px; height: 30px; background: var(--success-color); border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; font-size: var(--font-size-xs); color: white;">Assembly A</div>
+                        
+                        <!-- Safety pins -->
+                        <div class="map-pin safe" style="top: 40%; left: 15%; cursor: pointer;" title="Main Entrance - Safe"></div>
+                        <div class="map-pin high" style="top: 45%; left: 35%; cursor: pointer;" title="Science Lab - High Risk"></div>
+                        <div class="map-pin medium" style="top: 75%; left: 20%; cursor: pointer;" title="Cafeteria - Medium Risk"></div>
+                        <div class="map-pin safe" style="top: 65%; right: 15%; cursor: pointer;" title="Assembly Point - Safe"></div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/campus-map" class="btn btn-primary w-full">View Full Map</a>
+                </div>
+            </div>
+
+            <!-- Reports List -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Safety Reports</h3>
+                    <p class="card-description">Priority-sorted issues</p>
+                </div>
+                <div class="card-content">
+                    <div id="reports-list">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: #fee2e2; color: #dc2626;">🚨</div>
+                            <div class="activity-content">
+                                <div class="activity-title" style="font-size: var(--font-size-sm);">Fire extinguisher missing</div>
+                                <div class="activity-time">
+                                    <span class="badge badge-critical">Critical</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: #fed7aa; color: #ea580c;">⚠️</div>
+                            <div class="activity-content">
+                                <div class="activity-title" style="font-size: var(--font-size-sm);">Emergency exit light broken</div>
+                                <div class="activity-time">
+                                    <span class="badge badge-high">High</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: #fef3c7; color: #d97706;">📋</div>
+                            <div class="activity-content">
+                                <div class="activity-title" style="font-size: var(--font-size-sm);">Assembly sign faded</div>
+                                <div class="activity-time">
+                                    <span class="badge badge-medium">Medium</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/after-action-report" class="btn btn-outline w-full">View All Reports</a>
+                </div>
+            </div>
+
+            <!-- Safety Summary -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">📊 Safety Summary</h3>
+                    <p class="card-description">Key metrics overview</p>
+                </div>
+                <div class="card-content">
+                    <div class="text-center mb-4">
+                        <div class="stat-number text-primary">4:32</div>
+                        <div class="stat-label">Last Drill Time</div>
+                    </div>
+                    <div class="text-center mb-4">
+                        <div class="stat-number text-success">Jan 22</div>
+                        <div class="stat-label">Last Drill Date</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number text-warning">12</div>
+                        <div class="stat-label">Total Drills</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resilience Index Panel -->
+        <div class="grid grid-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">🎯 Campus Resilience Score</h3>
+                    <p class="card-description">Overall safety preparedness rating</p>
+                </div>
+                <div class="card-content">
+                    <div class="text-center">
+                        <canvas id="resilienceChart" width="200" height="200"></canvas>
+                        <div class="mt-4">
+                            <div class="stat-number text-success">88/100</div>
+                            <div class="stat-label">Excellent Performance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">🏆 Institution Leaderboard</h3>
+                    <p class="card-description">Regional rankings</p>
+                </div>
+                <div class="card-content">
+                    <div id="leaderboard">
+                        <div class="activity-item">
+                            <div class="activity-icon bg-warning" style="font-weight: bold;">1</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Sunrise Public School</div>
+                                <div class="activity-time">Score: 88 • <span class="badge badge-safe">Excellent</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-gray-300" style="font-weight: bold;">2</div>
+                            <div class="activity-content">
+                                <div class="activity-title">BPIT College</div>
+                                <div class="activity-time">Score: 84 • <span class="badge badge-safe">Excellent</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon bg-warning" style="font-weight: bold;">3</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Greenfield High School</div>
+                                <div class="activity-time">Score: 79 • <span class="badge badge-medium">Good</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item" style="background: #fef3c7; border-radius: var(--border-radius); padding: var(--spacing-2);">
+                            <div class="activity-icon bg-primary" style="font-weight: bold; color: white;">4</div>
+                            <div class="activity-content">
+                                <div class="activity-title" style="font-weight: 600;">Your Institution</div>
+                                <div class="activity-time">Score: 72 • <span class="badge badge-medium">Average</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/rankings" class="btn btn-outline w-full">View Full Rankings</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Resilience Chart
+            const ctx = document.getElementById('resilienceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Achieved', 'Remaining'],
+                    datasets: [{
+                        data: [88, 12],
+                        backgroundColor: ['#10b981', '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            // Load real-time data
+            loadDashboardData();
+        });
+
+        function loadDashboardData() {
+            // This would typically fetch from multiple API endpoints
+            console.log('Loading dashboard data...');
+            
+            // Load reports
+            fetch('/api/reports')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Reports loaded:', data);
+                })
+                .catch(error => console.error('Error loading reports:', error));
+        }
+    </script>
+</body>
+</html>
